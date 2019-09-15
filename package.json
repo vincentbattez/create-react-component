@@ -1,0 +1,14 @@
+{
+  "name": "create-react-component",
+  "version": "1.0.0",
+  "description": "crc",
+  "main": "crc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "crc": "./crc.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
