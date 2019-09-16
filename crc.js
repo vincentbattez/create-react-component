@@ -1,16 +1,26 @@
 #!/usr/bin/env node
 
-const chalk  = require('chalk');
+// external dependencies
 const clear  = require('clear');
-const figlet = require('figlet');
+const { join } = require('path');
+const { cloneDeep } = require('lodash');
+global.config = require('rc')(
+  'crc',
+  cloneDeep(require('./default.json'))
+);
 
+// Helpers
+const text = require('./helpers/text');
+
+// Libs
 const files = require('./lib/files');
-const [,, ...args] = process.argv;
 const inquirer  = require('./lib/inquirer');
+const { exec } = require('child_process');
+
 
 const run = async () => {
   // Brand
-  console.log(chalk.white(`${chalk.underline.bold.blue("C")}reate ${chalk.underline.bold.blue("R")}eact ${chalk.underline.bold.blue("C")}omponent`))
+  text.echoBrand();
 
   // Questions
   const componentExt = await inquirer.askComponentExtension();
@@ -24,6 +34,10 @@ const run = async () => {
     story: story.story,
   });
 
+  // Creations
+  if (!submit) {
+    return false
+  }
   console.log(submit);
 };
 
