@@ -6,7 +6,7 @@ const { join } = require('path');
 const { cloneDeep } = require('lodash');
 global.config = require('rc')(
   'crc',
-  cloneDeep(require('./default.json'))
+  cloneDeep(require('./default'))
 );
 
 // Helpers
@@ -38,6 +38,14 @@ const run = async () => {
   if (!submit) {
     return false
   }
+
+  console.log(perform)
+  // files.createFile(
+  //   `${path}/`,
+  //   `${name.name}.${componentExt.componentExt}`,
+  //
+  // );
+
   console.log(submit);
 };
 

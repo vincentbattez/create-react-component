@@ -1,7 +1,0 @@
-{
-  "ext": {
-    "component": "jsx",
-    "style": "scss"
-  },
-  "dist": "src/component"
-}
