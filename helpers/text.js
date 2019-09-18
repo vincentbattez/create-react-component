@@ -35,4 +35,9 @@ module.exports = {
 
     return list
   },
+  successMessage: (componentPath) => {
+    console.log(
+      chalk.green(`Component Created ! (${componentPath})`)
+    )
+  }
 };

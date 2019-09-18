@@ -39,7 +39,6 @@ const run = async () => {
     return false
   }
 
-  console.log(perform);
   // Create component file
   files.createFile(
     perform.component.fullPath,
@@ -75,6 +74,8 @@ const run = async () => {
     perform.stories.fullPath,
     config.templates.stories.render(perform)
   );
+
+  text.successMessage(perform.distPath)
 };
 
 clear();
