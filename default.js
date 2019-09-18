@@ -4,6 +4,7 @@ module.exports = {
     "style": "scss"
   },
   "dist": "src/component",
+  "stories": true,
   "templates": {
     "component": require('./templates/tsx/component'),
     "container": require('./templates/tsx/container'),

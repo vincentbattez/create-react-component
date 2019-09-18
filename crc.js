@@ -4,10 +4,13 @@
 const clear  = require('clear');
 const { join } = require('path');
 const { cloneDeep } = require('lodash');
+const chalk         = require('chalk');
+
 global.config = require('rc')(
   'crc',
-  cloneDeep(require('./default'))
+  cloneDeep(require('./default')),
 );
+config.hasCustomConfig = require('rc')('crc').config !== undefined;
 
 // Helpers
 const text = require('./helpers/text');
@@ -23,10 +26,33 @@ const run = async () => {
   text.echoBrand();
 
   // Questions
-  const componentExt = await inquirer.askComponentExtension();
-  const styleExt = await inquirer.askStyleExtension();
+  let componentExt;
+  if (config.hasCustomConfig && config.ext && config.ext.component) {
+    console.log(chalk.blue.bold('!') + chalk.bold(` Component extension from the config: ${chalk.blue.bold(config.ext.component)}`));
+    componentExt = {componentExt: config.ext.component}
+  } else {
+    componentExt = await inquirer.askComponentExtension();
+  }
+
+  let styleExt;
+  if (config.hasCustomConfig && config.ext && config.ext.style) {
+    console.log(chalk.blue.bold('!') + chalk.bold(` Style extension from the config: ${chalk.blue.bold(config.ext.style)}`));
+    styleExt = {styleExt: config.ext.style}
+  } else {
+    styleExt = await inquirer.askStyleExtension();
+  }
+
   const name = await inquirer.askComponentName(componentExt);
-  const story = await inquirer.askStorybook(componentExt);
+
+  // console.log(config.hasCustomConfig, config.hasOwnProperty('stories'))
+  let story;
+  if (config.hasCustomConfig && config.hasOwnProperty('stories')) {
+    console.log(chalk.blue('!') + chalk.bold(` Create stories from the config: ${chalk.blue.bold(config.stories)}`));
+    story = {stories: config.stories}
+  } else {
+    story = await inquirer.askStorybook(componentExt);
+  }
+
   const submit = await inquirer.askSubmit({
     componentExt: componentExt.componentExt,
     styleExt: styleExt.styleExt,
@@ -35,7 +61,7 @@ const run = async () => {
   });
 
   // Creations
-  if (!submit) {
+  if (!submit.submit) {
     return false
   }
 
