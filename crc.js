@@ -39,14 +39,42 @@ const run = async () => {
     return false
   }
 
-  console.log(perform)
-  // files.createFile(
-  //   `${path}/`,
-  //   `${name.name}.${componentExt.componentExt}`,
-  //
-  // );
-
-  console.log(submit);
+  console.log(perform);
+  // Create component file
+  files.createFile(
+    perform.component.fullPath,
+    config.templates.component.render(perform)
+  );
+  // Create type file
+  files.createFile(
+    perform.type.fullPath,
+    config.templates.type.render(perform)
+  );
+  // Create style file
+  files.createFile(
+    perform.style.fullPath,
+    config.templates.style.render(perform)
+  );
+  // Create container file
+  files.createFile(
+    perform.container.fullPath,
+    config.templates.container.render(perform)
+  );
+  // Create index file
+  files.createFile(
+    perform.index.fullPath,
+    config.templates.index.render(perform)
+  );
+  // Create test file
+  files.createFile(
+    perform.test.fullPath,
+    config.templates.test.render(perform)
+  );
+  // Create test file
+  files.createFile(
+    perform.stories.fullPath,
+    config.templates.stories.render(perform)
+  );
 };
 
 clear();
